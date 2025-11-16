@@ -1,11 +1,271 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>fparismusic</title>
-  </head>
-  <body>
-    <h1>Site online</h1>
-    <p>Funziona.</p>
-  </body>
+<!--
+Single-file portfolio template "Filippo Paris — Creative Developer" (desktop-first)
+Ready for GitHub Pages: drop this file as `index.html` in the root of a repository.
+
+How to use
+1) Create a repo named `fparismusic.github.io` (makes a User Page) OR any repo and enable Pages.
+2) Add this file as `index.html` in the default branch (usually `main`).
+3) Push. The site will be live at https://<username>.github.io/ or https://<username>.github.io/<repo>/ for project pages.
+
+Customize
+- Replace NAME, BIO, WORK items, and links below.
+- Swap the hero image by replacing the <img id="hero-img"> src with your file (or an external URL).
+- Edit --accent-color in :root for a different palette.
+- If you want to add case studies, copy a .work-card block and update content.
+
+Notes
+- This is an original implementation inspired by the look & feel of a creative-developer portfolio. Do not copy protected text or assets from other sites.
+- Desktop-first: page shows a rotate-device overlay on small screens (change/remove if you need mobile-first).
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Filippo Paris — Creative Developer</title>
+  <meta name="description" content="Portfolio — Filippo Paris | Creative developer: film, theatre, interactive installations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0c; --muted:#9aa0a6; --text:#e9ecef; --accent:#f0a500; --glass: rgba(255,255,255,0.04);
+      --maxw:1100px; --gap:28px;
+      --monosize:13px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,#070708 0%, #0b0b0c 60%); color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+    .wrap{max-width:var(--maxw); margin:48px auto; padding:32px; display:grid; grid-template-columns: 1fr 420px; gap:var(--gap); align-items:start}
+
+    /* Header */
+    header{grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px}
+    .brand{font-weight:800; letter-spacing:0.4px}
+    .nav{display:flex; gap:18px; align-items:center}
+    .nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size:14px}
+    .cta{border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; color:var(--muted); font-weight:600}
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg, transparent, rgba(255,255,255,0.02)); padding:36px; border-radius:14px; display:flex; gap:28px}
+    .hero-left{flex:1}
+    h1{margin:0; font-size:42px; line-height:1.02}
+    p.lead{color:var(--muted); margin-top:12px; max-width:62ch}
+
+    .hero-right{width:360px; min-width:260px; display:flex; align-items:center; justify-content:center}
+    .hero-card{width:320px; height:320px; border-radius:16px; overflow:hidden; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.6); background:linear-gradient(135deg,#0d0d0f, #121214)}
+    .hero-card img{width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.03)}
+    .glitch{position:absolute; inset:0; pointer-events:none}
+
+    /* Work + About + Contact */
+    .col{background:var(--glass); padding:22px; border-radius:12px}
+    .about{margin-top:12px}
+    .work-grid{display:grid; grid-template-columns:1fr; gap:14px}
+    .work-card{display:flex; gap:14px; align-items:center; padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .work-card img{width:90px; height:64px; object-fit:cover; border-radius:8px; flex:0 0 90px}
+    .work-meta{flex:1}
+    .work-meta h4{margin:0 0 6px 0}
+    .work-meta p{margin:0; color:var(--muted); font-size:14px}
+
+    footer{grid-column:1/-1; margin-top:18px; display:flex; justify-content:space-between; color:var(--muted); font-size:13px}
+
+    /* small screens show rotate overlay */
+    @media(max-width:900px){
+      .wrap{grid-template-columns:1fr; padding:18px}
+      .hero-right{order:3; width:100%}
+      .hero-card{width:100%; height:260px}
+      .desktop-only{display:none}
+    }
+    @media(max-width:640px){
+      /* Show rotate overlay to nudge desktop-first experience */
+      body::before{content:''; position:fixed; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85)); display:block}
+      .wrap{opacity:0.01; transform:scale(0.98); pointer-events:none}
+      .rotate-overlay{position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; color:var(--text); z-index:60}
+      .rotate-overlay h2{margin:0; font-size:18px}
+      .rotate-overlay p{margin:0; color:var(--muted)}
+    }
+
+    /* small UI niceties */
+    .pill{display:inline-block; font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,0.03); color:var(--muted)}
+
+    /* subtle hover/interactive steps */
+    .steps{display:flex; gap:8px; margin-top:14px}
+    .step{padding:8px 10px; background:rgba(255,255,255,0.02); border-radius:8px; cursor:pointer; color:var(--muted); font-weight:600}
+    .step.active{background:linear-gradient(90deg, rgba(240,165,0,0.12), rgba(240,165,0,0.04)); color:var(--accent)}
+
+    /* glitch keyframes */
+    @keyframes glitch-anim{ 0%{transform:translateX(0)} 20%{transform:translateX(-6px) skewX(-2deg)} 40%{transform:translateX(4px) skewX(2deg)} 60%{transform:translateX(-2px)} 100%{transform:none} }
+    .glitch::after, .glitch::before{content:''; position:absolute; inset:0; mix-blend-mode:screen; opacity:0.06}
+    .glitch::before{background:linear-gradient(90deg, transparent 20%, rgba(240,165,0,0.08) 50%, transparent 80%); transform:translateX(-10%) rotate(1deg); filter:blur(6px)}
+    .glitch::after{background:linear-gradient(180deg, rgba(255,0,0,0.06), transparent 30%, rgba(0,140,255,0.06)); animation:glitch-anim 3s infinite}
+
+    /* small fonts */
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:var(--monosize)}
+
+  </style>
+</head>
+<body>
+
+<div class="wrap" id="app">
+  <header>
+    <div class="brand">Filippo Paris <span class="muted mono">— creative developer</span></div>
+    <nav class="nav desktop-only">
+      <a href="#work">WORK</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact" class="cta">MEET ME</a>
+    </nav>
+  </header>
+
+  <main style="grid-column:1;">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Interactive experiences at the intersection of film, theatre and code.</h1>
+        <p class="lead">I design audiovisual installations, interactive sets and web-first experiences. I write generative visuals, realtime audio synthesis and integrate them with live performance.</p>
+
+        <div class="steps" aria-hidden>
+          <div class="step active" data-step="1">Visuals</div>
+          <div class="step" data-step="2">Sound</div>
+          <div class="step" data-step="3">Installations</div>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:12px; align-items:center">
+          <div class="pill">Available for commissions</div>
+          <div style="color:var(--muted); font-size:13px">Email: <a href="mailto:hello@yourdomain.com" style="color:var(--muted); text-decoration:underline">hello@yourdomain.com</a></div>
+        </div>
+
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-card" id="heroCard">
+          <img id="hero-img" src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="artist">
+          <div class="glitch"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" style="margin-top:18px">
+      <div class="col">
+        <h3 style="margin:0 0 10px 0">Selected work</h3>
+        <div class="work-grid">
+          <!-- Work item 1 -->
+          <article class="work-card">
+            <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="project">
+            <div class="work-meta">
+              <h4>Dream Machine — interactive installation</h4>
+              <p class="muted">Generative visuals controlled by audience movement. Clients: Dior.</p>
+            </div>
+          </article>
+          <!-- Work item 2 -->
+          <article class="work-card">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="project">
+            <div class="work-meta">
+              <h4>Stage Render — live theatre VFX</h4>
+              <p class="muted">Real-time projection mapping synced to live actors. Client: Chanel.</p>
+            </div>
+          </article>
+          <!-- Work item 3 -->
+          <article class="work-card">
+            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="project">
+            <div class="work-meta">
+              <h4>Web Lab — interactive website</h4>
+              <p class="muted">A web-native experience mixing audio synthesis and shader visuals. Client: Renault.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="col">
+        <h3 style="margin-top:0">About</h3>
+        <p class="muted">I studied cinematography and theatre, then moved into creative coding during the 2020 lockdown. I now build experiences that bring live performance and real-time web technologies together.</p>
+        <p style="margin-top:8px; color:var(--muted); font-size:14px">Tools: WebGL, GLSL, three.js, Tone.js, node.js, NDI, TouchDesigner.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <aside style="grid-column:2/3">
+    <div class="col">
+      <h4 style="margin:0 0 8px 0">Contact</h4>
+      <p class="muted" style="margin:0 0 12px 0">Available for commissions and collaborations. Based in Milan.</p>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <a href="mailto:hello@yourdomain.com" class="cta" style="text-align:center">EMAIL</a>
+        <a class="pill" href="https://www.linkedin.com/">LinkedIn</a>
+        <a class="pill" href="https://www.instagram.com/">Instagram</a>
+      </div>
+    </div>
+
+    <div class="col" style="margin-top:14px">
+      <h4 style="margin:0 0 8px 0">Quick links</h4>
+      <p style="margin:0; color:var(--muted)">CV · Selected press · Technical notes</p>
+    </div>
+  </aside>
+
+  <footer>
+    <div>© Filipp o Paris — <span class="muted mono">fparismusic</span></div>
+    <div class="muted">Built with HTML · CSS · JS — deploy on GitHub Pages</div>
+  </footer>
+
+</div>
+
+<!-- rotate overlay for small screens -->
+<div class="rotate-overlay" style="display:none">
+  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M7 2v2a5 5 0 0 0 0 10v2a7 7 0 0 1 0-14zm10 20v-2a5 5 0 0 0 0-10v-2a7 7 0 0 1 0 14z" fill="currentColor"></path></svg>
+  <h2>Please rotate your device</h2>
+  <p class="muted">This template is desktop-first for a portfolio presentation.</p>
+</div>
+
+<script>
+// show overlay on small screens
+function checkSize(){
+  const overlay = document.querySelector('.rotate-overlay');
+  if(!overlay) return;
+  if(window.innerWidth < 640){ overlay.style.display='flex'; } else { overlay.style.display='none' }
+}
+window.addEventListener('resize', checkSize);
+checkSize();
+
+// steps UI: animate hero image filter based on step
+const steps = document.querySelectorAll('.step');
+const heroImg = document.getElementById('hero-img');
+steps.forEach(s=>s.addEventListener('click', ()=>{
+  steps.forEach(x=>x.classList.remove('active'));
+  s.classList.add('active');
+  const id = s.dataset.step;
+  if(id==='1'){
+    heroImg.style.filter='brightness(1.02) saturate(1.02)';
+  } else if(id==='2'){
+    heroImg.style.filter='grayscale(0.2) contrast(1.1) blur(0.2px)';
+  } else {
+    heroImg.style.filter='hue-rotate(40deg) saturate(1.2)';
+  }
+}));
+
+// small parallax for hero-card
+const card = document.getElementById('heroCard');
+card.addEventListener('mousemove', e=>{
+  const r = card.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - 0.5;
+  const y = (e.clientY - r.top) / r.height - 0.5;
+  card.style.transform = `translate3d(${x*10}px, ${y*10}px, 0) rotateX(${y*-3}deg) rotateY(${x*3}deg)`;
+});
+card.addEventListener('mouseleave', ()=>{ card.style.transform='none' });
+
+// small accessibility: keyboard nav for steps
+let stepIndex = 0;
+window.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'){ stepIndex = Math.min(stepIndex+1, steps.length-1); steps[stepIndex].click(); }
+  if(e.key==='ArrowLeft'){ stepIndex = Math.max(stepIndex-1, 0); steps[stepIndex].click(); }
+});
+</script>
+
+</body>
 </html>
+
